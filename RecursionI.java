@@ -136,7 +136,16 @@ public class RecursionI {
      * maintained.
      */
     public int[] moveZero(int[] array) {
-        return new int[0];
+        int left = 0;
+        int right = array.length - 1;
+        while (left <= right) {
+            if (array[left] == 0) {
+                swap(array, left, right--);
+            } else {
+                left++;
+            }
+        }
+        return array;
     }
 
     /**
