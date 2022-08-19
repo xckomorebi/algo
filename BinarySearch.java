@@ -1,7 +1,7 @@
 public class BinarySearch {
     public static void main(String[] args) {
         BinarySearch b = new BinarySearch();
-        int[] array = new int[]{3,4,5,6,6,12,16};
+        int[] array = new int[] { 3, 4, 5, 6, 6, 12, 16 };
         System.out.println(b.closest(array, 10));
     }
 
@@ -31,13 +31,18 @@ public class BinarySearch {
     }
 
     /**
-     * Search in 2D.
-     * Given a 2D matrix that contains integers only, which each row is sorted in an ascending order. The first element of next row is larger than (or equal to) the last element of previous row.
-     * Given a target number, returning the position that the target locates within the matrix. If the target number does not exist in the matrix, return {-1, -1}.
+     * Search in 2D
+     * <p>
+     * Given a 2D matrix that contains integers only, which each row is sorted in an
+     * ascending order. The first element of next row is larger than (or equal to)
+     * the last element of previous row.
+     * Given a target number, returning the position that the target locates within
+     * the matrix. If the target number does not exist in the matrix, return {-1,
+     * -1}.
      */
     public int[] search(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return new int[]{-1, -1};
+            return new int[] { -1, -1 };
         }
         int H = matrix.length;
         int W = matrix[0].length;
@@ -46,12 +51,12 @@ public class BinarySearch {
         int right = H * W - 1;
         int mid;
 
-        while (left <= right){
+        while (left <= right) {
             mid = left + (right - left) / 2;
             int y = mid % W;
             int x = mid / W;
             if (matrix[x][y] == target) {
-                return new int[]{x, y};
+                return new int[] { x, y };
             }
             if (matrix[x][y] > target) {
                 left = mid + 1;
@@ -60,12 +65,14 @@ public class BinarySearch {
             }
         }
 
-        return new int[]{-1, -1};
+        return new int[] { -1, -1 };
     }
 
     /**
      * Closest
-     *Given a target integer T and an integer array A sorted in ascending order, find the index i in A such that A[i] is closest to T.
+     * <p>
+     * Given a target integer T and an integer array A sorted in ascending order,
+     * find the index i in A such that A[i] is closest to T.
      */
     public int closest(int[] array, int target) {
         // Write your solution here
@@ -89,8 +96,11 @@ public class BinarySearch {
     }
 
     /**
-     * First Occur.
-     * Given a target integer T and an integer array A sorted in ascending order, find the index of the first occurrence of T in A or return -1 if there is no such index.
+     * First Occur
+     * <p>
+     * Given a target integer T and an integer array A sorted in ascending order,
+     * find the index of the first occurrence of T in A or return -1 if there is no
+     * such index.
      */
     public int firstOccur(int[] array, int target) {
         if (array == null || array.length == 0) {
@@ -112,8 +122,11 @@ public class BinarySearch {
     }
 
     /**
-     * K Cloest.
-     * Given a target integer T, a non-negative integer K and an integer array A sorted in ascending order, find the K closest numbers to T in A. If there is a tie, the smaller elements are always preferred.
+     * K Cloest
+     * <p>
+     * Given a target integer T, a non-negative integer K and an integer array A
+     * sorted in ascending order, find the K closest numbers to T in A. If there is
+     * a tie, the smaller elements are always preferred.
      */
     public int[] kClosest(int[] array, int target, int k) {
         if (array == null || array.length == 0) {
@@ -143,8 +156,11 @@ public class BinarySearch {
     }
 
     /**
-     * Smallest Element Larger than Target.
-     * Given a target integer T and an integer array A sorted in ascending order, find the index of the smallest element in A that is larger than T or return -1 if there is no such index.
+     * Smallest Element Larger than Target
+     * <p>
+     * Given a target integer T and an integer array A sorted in ascending order,
+     * find the index of the smallest element in A that is larger than T or return
+     * -1 if there is no such index.
      */
     public int smallestElementLargerThanTarget(int[] array, int target) {
         if (array == null || array.length == 0 || array[array.length - 1] <= target) {
@@ -171,8 +187,12 @@ public class BinarySearch {
     }
 
     /**
-     * Search In Unknown Sized Sorted Array.
-     * Given a integer dictionary A of unknown size, where the numbers in the dictionary are sorted in ascending order, determine if a given target integer T is in the dictionary. Return the index of T in A, return -1 if T is not in A.
+     * Search In Unknown Sized Sorted Array
+     * <p>
+     * Given a integer dictionary A of unknown size, where the numbers in the
+     * dictionary are sorted in ascending order, determine if a given target integer
+     * T is in the dictionary. Return the index of T in A, return -1 if T is not in
+     * A.
      */
     public int search(Dictionary dict, int target) {
         int size = 1;
