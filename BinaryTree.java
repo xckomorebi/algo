@@ -180,33 +180,33 @@ public class BinaryTree {
      * already contain the key. Return the root of the binary search tree.
      */
     // public TreeNode insert(TreeNode root, int key) {
-    //     if (root == null) {
-    //         return new TreeNode(key);
-    //     }
-    //     insertHelper(root, key);
-    //     return root;
+    // if (root == null) {
+    // return new TreeNode(key);
+    // }
+    // insertHelper(root, key);
+    // return root;
     // }
 
     // private void insertHelper(TreeNode node, int key) {
-    //     if (node == null || node.key == key) {
-    //         return;
-    //     }
-
-    //     if (node.key > key) {
-    //         if (node.left == null) {
-    //             node.left = new TreeNode(key);
-    //         } else {
-    //             insertHelper(node.left, key);
-    //         }
-    //     } else {
-    //         if (node.right == null) {
-    //             node.right = new TreeNode(key);
-    //         } else {
-    //             insertHelper(node.right, key);
-    //         }
-    //     }
+    // if (node == null || node.key == key) {
+    // return;
     // }
-    public TreeNode insert(TreeNode root, int key)  {
+
+    // if (node.key > key) {
+    // if (node.left == null) {
+    // node.left = new TreeNode(key);
+    // } else {
+    // insertHelper(node.left, key);
+    // }
+    // } else {
+    // if (node.right == null) {
+    // node.right = new TreeNode(key);
+    // } else {
+    // insertHelper(node.right, key);
+    // }
+    // }
+    // }
+    public TreeNode insert(TreeNode root, int key) {
         if (root == null) {
             return new TreeNode(key);
         }
@@ -216,5 +216,173 @@ public class BinaryTree {
             root.left = insert(root.left, key);
         }
         return root;
+    }
+
+    /**
+     * Delete In Binary Search Tree
+     * <p>
+     * Delete the target key K in the given binary search tree if the binary search
+     * tree contains K. Return the root of the binary search tree. Find your own way
+     * to delete the node from the binary search tree, after deletion the binary
+     * search tree's property should be maintained.
+     */
+    public TreeNode deleteTree(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.key > key) {
+            root.left = deleteTree(root.left, key);
+            return root;
+        }
+        if (root.key < key) {
+            root.right = deleteTree(root.right, key);
+            return root;
+        }
+
+        if (root.right == null) {
+            return root.left;
+        }
+        if (root.right.left == null) {
+            root.right.left = root.left;
+            return root.right;
+        }
+
+        TreeNode node = root.right;
+        while (node.left.left != null) {
+            node = node.left;
+        }
+        TreeNode newRoot = node.left;
+        node.left = newRoot.right; // !!!!IMPORTANT
+        newRoot.left = root.left;
+        newRoot.right = root.right;
+        return newRoot;
+    }
+
+    /**
+     * Pre-order Traversal of Binary Tree (iterative)
+     * <p>
+     * Implement an iterative, pre-order traversal of a given binary tree, return
+     * the list of keys of each node in the tree as it is pre-order traversed.
+     */
+    public List<Integer> preOrder2(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.offerLast(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pollLast();
+            result.add(node.key);
+            if (node.right != null) {
+                stack.offerLast(node.right);
+            }
+            if (node.left != null) {
+                stack.offerLast(node.left);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * In-order Traversal of Binary Tree (iterative)
+     * <p>
+     * Implement an iterative, in-order traversal of a given binary tree, return the
+     * list of keys of each node in the tree as it is in-order traversed.
+     */
+    public List<Integer> inOrder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.offerLast(root);
+        TreeNode helper = root.left;
+        TreeNode node;
+
+        while (helper != null || !stack.isEmpty()) {
+            if (helper == null) {
+                node = stack.pollLast();
+                result.add(node.key);
+                helper = node.right;
+            } else {
+                stack.offerLast(helper);
+                helper = helper.left;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Post-order Traversal of Binary Tree (iterative)
+     * <p>
+     * Implement an iterative, post-order traversal of a given binary tree, return
+     * the list of keys of each node in the tree as it is post-order traversed.
+     */
+    public List<Integer> postOrder(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode helper = root;
+        TreeNode node;
+
+        while (helper != null || !stack.isEmpty()) {
+            if (helper == null) {
+                node = stack.peekLast();
+                if (node.right != null) {
+                    stack.offerLast(node.right);
+                    helper = node.right.left;
+                } else {
+                    result.add(node.key);
+                    helper = null;
+                    if (!stack.isEmpty() && stack.peekLast().right == node) {
+                        helper = node;
+                    }
+                }
+            } else if (helper == stack.peekLast().right) {
+                node = stack.pollLast();
+                result.add(node.key);
+                helper = null;
+                if (!stack.isEmpty() && stack.peekLast().right == node) {
+                    helper = node;
+                }
+            } else {
+                stack.offerLast(helper);
+                helper = helper.left;
+            }
+        }
+        return result;
+    }
+
+    public List<Integer> postOrder2(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.offerLast(root);
+        TreeNode helper = root;
+
+        while (!stack.isEmpty()) {
+            TreeNode cur = stack.peekLast();
+            if (cur.right == helper || cur.left == helper && cur.right == null) {
+                result.add(cur.key);
+                helper = cur;
+            } else {
+                if (cur.right != null) {
+                    stack.offerLast(cur.right);
+                }
+                if (cur.left != null) {
+                    stack.offerLast(cur.left);
+                }
+                if (cur.left == null && cur.right == null) {
+                    helper = null;
+                }
+            }
+        }
+        return result;
     }
 }
