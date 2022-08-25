@@ -99,4 +99,35 @@ public class DFS {
         }
     }
 
+    /**
+     * All Permutations I
+     * <p>
+     * Given a string with no duplicate characters, return a list with all
+     * permutations of the characters.
+     */
+    public List<String> permutations(String input) {
+        List<String> result = new ArrayList<>();
+        char[] ch = input.toCharArray();
+        permutations(ch, 0, result);
+        return result;
+    }
+
+    private void permutations(char[] ch, int index, List<String> result) {
+        if (index == ch.length) {
+            result.add(String.valueOf(ch));
+            return;
+        }
+
+        for (int i = index; i < ch.length; i++) {
+            swap(ch, index, i);
+            permutations(ch, index + 1, result);
+            swap(ch, index, i);
+        }
+    }
+
+    private void swap(char[] ch, int a, int b) {
+        char temp = ch[a];
+        ch[a] = ch[b];
+        ch[b] = temp;
+    }
 }
