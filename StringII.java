@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class StringII {
     public static void main(String[] args) {
         StringII s = new StringII();
@@ -54,10 +56,10 @@ public class StringII {
     }
 
     /**
-      * Right Shift By N Characters
-      * <p>
-      * Right shift a given string by n characters.
-    */
+     * Right Shift By N Characters
+     * <p>
+     * Right shift a given string by n characters.
+     */
     public String rightShift(String input, int n) {
         if (n == 0 || input.isEmpty()) {
             return input;
@@ -65,5 +67,17 @@ public class StringII {
         n %= input.length();
         char[] ch = input.toCharArray();
         return new String(ch, n, ch.length - n) + new String(ch, 0, n);
+    }
+
+    /**
+     * All Permutations II
+     * <p>
+     * Given a string with possible duplicate characters, return a list with all
+     * permutations of the characters.
+     */
+    public List<String> permutations(String input) {
+        List<String> result = new ArrayList<>();
+
+        return result;
     }
 }
