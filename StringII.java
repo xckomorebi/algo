@@ -4,7 +4,7 @@ public class StringII {
     public static void main(String[] args) {
         StringII s = new StringII();
         // System.out.println(s.rightShift("abcdefg", 39));
-        System.out.println(s.replace("123", "12", "4"));
+        System.out.println(s.allAnagrams("abc", "bacb"));
     }
 
     /**
@@ -126,8 +126,28 @@ public class StringII {
      */
     public List<String> permutations(String input) {
         List<String> result = new ArrayList<>();
+        char[] ch = input.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        permuations(ch, 0, sb, result);
+        return result;
     }
 
+    private void permuations(char[] ch, int index, StringBuilder sb, List<String> result) {
+        if (index == ch.length) {
+            result.add(sb.toString());
+            return;
+        }
+        Set<Character> set = new HashSet<>();
+        for (int i = index; i < ch.length; i++) {
+            if (!set.contains(ch[i])) {
+                set.add(ch[i]);
+                swap(ch, index, i);
+                sb.append(ch[index]);
+                permuations(ch, index + 1, sb, result);
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        }
+    }
 
     private boolean isSubString(char[] array, int start, String source) {
         if (start + source.length() > array.length) {
@@ -252,4 +272,66 @@ public class StringII {
         return max;
     }
 
+    /**
+     * All Anagrams
+     * <p>
+     * Find all occurrence of anagrams of a given string s in a given string l.
+     * Return the list of starting indices.
+     */
+    public List<Integer> allAnagrams(String sh, String lo) {
+        List<Integer> result = new ArrayList<>();
+        int[] set = new int[26];
+        if (sh.length() > lo.length()) {
+            return result;
+        }
+
+        for (int i = 0; i < sh.length(); i++) {
+            set[sh.charAt(i) - 'a']++;
+        }
+        int[] set2 = new int[26];
+        for (int i = 0; i < sh.length(); i++) {
+            set2[sh.charAt(i) - 'a']++;
+        }
+
+        if (Arrays.compare(set, set2) == 0) {
+            result.add(0);
+        }
+        for (int i = 1; i <= sh.length() - sh.length(); i++) {
+            set2[sh.charAt(i - 1) - 'a']--;
+            set2[sh.charAt(i - 1 + sh.length()) - 'a']++;
+            if (Arrays.compare(set, set2) == 0) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    
+    /**
+      * Longest subarray contains only 1s
+      * <p>
+      * Given an array of integers that contains only 0s and 1s and a positive integer k, you can flip at most k 0s to 1s, return the longest subarray that contains only integer 1 after flipping.
+    */
+    public int longestConsecutiveOnes(int[] nums, int k) {
+        int i = 0;
+        int j = 0;
+        int max = 0;
+        while (j < nums.length) {
+            if (nums[j] == 1) {
+                j++;
+            } else {
+                if (k > 0) {
+                    k--;
+                    j++;
+                } else {
+                    while (i < nums.length && nums[i] == 1) {
+                        i++;
+                    }
+                    i++;
+                    j++;
+                }
+            }
+            max = Math.max(j - i, max);
+        }
+        return max;
+    }
 }

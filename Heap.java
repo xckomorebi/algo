@@ -2,7 +2,6 @@ import java.util.*;
 
 import utils.GraphNode;
 import utils.TreeNode;
-import java.util.Comparator;
 
 public class Heap {
     public static void main(String[] args) {
