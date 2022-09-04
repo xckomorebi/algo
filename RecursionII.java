@@ -164,10 +164,10 @@ public class RecursionII {
     }
 
     /**
-      * Lowest Common Ancestor I
-      * <p>
-      * Given two nodes in a binary tree, find their lowest common ancestor.
-    */
+     * Lowest Common Ancestor I
+     * <p>
+     * Given two nodes in a binary tree, find their lowest common ancestor.
+     */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode one, TreeNode two) {
         if (root == null || root == one || root == two) {
             return root;
@@ -182,5 +182,66 @@ public class RecursionII {
         } else {
             return root;
         }
+    }
+
+    /**
+      * Spiral Order Traverse II
+      * <p>
+      * Traverse an M * N 2D array in spiral order clock-wise starting from the top left corner. Return the list of traversal sequence.
+    */
+    public List<Integer> spiral2(int[][] matrix) {
+        int H = matrix.length;
+        int W = matrix[0].length;
+
+
+        List<Integer> result = new ArrayList<>();
+        int offset = 0;
+        int maxOffset = Math.min(H / 2, W / 2);
+        while (offset < maxOffset) {
+            for (int i = offset; i < W - offset - 1; i++) {
+                result.add(matrix[offset][i]);
+            }
+            for (int i = offset; i < H - offset - 1; i++) {
+                result.add(matrix[i][W - 1 - offset]);
+            }
+            for (int i = W - 1 - offset; i > offset; i--) {
+                result.add(matrix[H - 1 - offset][i]);
+            }
+            for (int i = H - 1 - offset; i > offset; i--) {
+                result.add(matrix[i][offset]);
+            }
+            offset++;
+        }
+
+        if (H > W && W % 2 == 1) {
+            for (int i = offset; i < H - offset; i++) {
+                result.add(matrix[i][offset]);
+            }
+        }
+
+        if (W >= H && H % 2 == 1) {
+            for (int i = offset; i < W - offset; i++) {
+                result.add(matrix[offset][i]);
+            }
+        }
+        return result;
+    }
+
+    /**
+      * Reverse Binary Tree Upside Down
+      * <p>
+      * Given a binary tree where all the right nodes are leaf nodes, flip it upside down and turn it into a tree with left leaf nodes as the root.
+    */
+    public TreeNode reverse(TreeNode root) {
+        if (root == null || root.left == null) {
+            return root;
+        }
+        TreeNode left = root.left;
+        TreeNode newHead = reverse(root.left);
+        left.left = root;
+        root.left = null;
+        left.right = root.right;
+        root.right = null;
+        return newHead;
     }
 }
