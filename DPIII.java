@@ -261,6 +261,28 @@ public class DPIII {
      * sum. Return the sum of the submatrix.
      */
     public int largest3(int[][] matrix) {
-        return 0;
+        int H = matrix.length;
+        int W = matrix[0].length;
+
+        int[][] dp = new int[H + 1][W];
+
+        for (int i = 0; i < H; i++) {
+            for (int j = 0; j < W; j++) {
+                dp[i + 1][j] = dp[i][j] + matrix[i][j];
+            }
+        }
+
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < H; i++) {
+            for (int j = i + 1; j < H + 1; j++) {
+                int cur = 0;
+                for (int k = 0; k < W; k++) {
+                    cur += dp[j][k] - dp[i][k];
+                    max = Math.max(cur, max);
+                    cur = Math.max(0, cur);
+                }
+            }
+        }
+        return max;
     }
 }
