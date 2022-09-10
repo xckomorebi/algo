@@ -3,6 +3,18 @@ import utils.TreeNode;
 import utils.TreeNodeP;
 
 public class CrossTrainingI {
+    public static void main(String[] args) {
+        String[] input = new String[] {
+            "4","3","8","1","#","6","#","#","2","5","7"
+        };
+        TreeNode root = TreeNode.fromLevelOrder(input);
+        CrossTrainingI c = new CrossTrainingI();
+        double target = -1000.0;
+        int k = 3;
+        int[] result = c.closestKValues(root, target, k);
+        System.out.println(result);
+    }
+
     /**
      * Array Deduplication I
      * <p>
@@ -247,5 +259,47 @@ public class CrossTrainingI {
             }
         }
         return Arrays.copyOf(array, i);
+    }
+
+    /**
+     * Closest Number In Binary Search Tree II
+     * <p>
+     * In a binary search tree, find k nodes containing the closest numbers to the
+     * given target number. return them in sorted array
+     */
+    public int[] closestKValues(TreeNode root, double target, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                return (int) (Math.abs(b - target) - Math.abs(a - target));
+            }
+        });
+
+        closestKValues(root, pq, k, target);
+        k = Math.min(pq.size(), k);
+        int[] result = new int[k];
+
+        for (int i = 0; i < k; i++) {
+            result[i] = pq.poll();
+        }
+
+        Arrays.sort(result);
+
+        return result;
+    }
+
+    private void closestKValues(TreeNode node, PriorityQueue<Integer> pq, int k, double target) {
+        if (node == null) {
+            return;
+        }
+        int key = node.key;
+        if (pq.size() < k) {
+            pq.offer(key);
+        } else if (Math.abs(key - target) < Math.abs(pq.peek() - target)) {
+            pq.poll();
+            pq.offer(key);
+        }
+        closestKValues(node.left, pq, k, target);
+        closestKValues(node.right, pq, k, target);
     }
 }

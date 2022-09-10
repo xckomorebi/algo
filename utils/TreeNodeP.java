@@ -6,7 +6,7 @@ public class TreeNodeP {
     public TreeNodeP right;
     public TreeNodeP parent;
 
-    public TreeNodeP(int key, TreeNode parent) {
+    public TreeNodeP(int key, TreeNodeP parent) {
         this.key = key;
         this.parent = parent;
     }
