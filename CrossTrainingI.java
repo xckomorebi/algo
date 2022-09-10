@@ -185,12 +185,67 @@ public class CrossTrainingI {
     }
 
     /**
-      * Lowest Common Ancestor II
-      * <p>
-      * Given two nodes in a binary tree (with parent pointer available), find their lowest common ancestor.
-    */
+     * Lowest Common Ancestor II
+     * <p>
+     * Given two nodes in a binary tree (with parent pointer available), find their
+     * lowest common ancestor.
+     */
     public TreeNodeP lowestCommonAncestor(TreeNodeP one, TreeNodeP two) {
-        // TreeNodeP 
+        TreeNodeP cur1 = one;
+        TreeNodeP cur2 = two;
+
+        int height1 = 0;
+        int height2 = 0;
+
+        while (cur1.parent != null) {
+            height1++;
+            cur1 = cur1.parent;
+        }
+        while (cur2.parent != null) {
+            height2++;
+            cur2 = cur2.parent;
+        }
+
+        if (height1 < height2) {
+            int h = height2 - height1;
+            while (h-- > 0) {
+                two = two.parent;
+            }
+        } else {
+            int h = height1 - height2;
+            while (h-- > 0) {
+                one = one.parent;
+            }
+        }
+
+        while (one != two) {
+            one = one.parent;
+            two = two.parent;
+        }
         return one;
+    }
+
+    /**
+     * Array Deduplication IV
+     * <p>
+     * Given an unsorted integer array, remove adjacent duplicate elements
+     * repeatedly, from left to right. For each group of elements with the same
+     * value do not keep any of them. Do this in-place, using the left side of the
+     * original array. Return the array after deduplication.
+     */
+    public int[] dedup4(int[] array) {
+        int i = 0;
+        int j = 0;
+        while (j < array.length) {
+            if (i == 0 || array[i - 1] != array[j]) {
+                array[i++] = array[j++];
+            } else {
+                while (j < array.length && array[i - 1] == array[j]) {
+                    j++;
+                }
+                i--;
+            }
+        }
+        return Arrays.copyOf(array, i);
     }
 }
