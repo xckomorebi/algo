@@ -1,6 +1,7 @@
 import java.util.*;
 import utils.TreeNode;
 import utils.TreeNodeP;
+import utils.KnaryTreeNode;
 
 public class CrossTrainingI {
     public static void main(String[] args) {
@@ -301,5 +302,89 @@ public class CrossTrainingI {
         }
         closestKValues(node.left, pq, k, target);
         closestKValues(node.right, pq, k, target);
+    }
+
+    /**
+     * Lowest Common Ancestor IV
+     * <p>
+     * Given K nodes in a binary tree, find their lowest common ancestor.
+    */
+    public TreeNode lowestCommonAncestor2(TreeNode root, List<TreeNode> nodes) {
+        Set<TreeNode> set = new HashSet<>();
+        for (TreeNode n : nodes) {
+            set.add(n);
+        }
+
+        return lowestCommonAncestor(root, set);
+    }
+
+    private TreeNode lowestCommonAncestor(TreeNode node, Set<TreeNode> set) {
+        if (node == null || set.contains(node)) {
+            return node;
+        }
+
+        TreeNode left = lowestCommonAncestor(node.left, set);
+        TreeNode right = lowestCommonAncestor(node.right, set);
+
+        if (left != null && right != null) {
+            return node;
+        } else {
+            return left == null ? right : left;
+        }
+    }
+
+    /**
+     * Lowest Common Ancestor V
+     * <p>
+     * Given two nodes in a K-nary tree, find their lowest common ancestor.
+    */
+    public KnaryTreeNode lowestCommonAncestor3(KnaryTreeNode root, KnaryTreeNode a, KnaryTreeNode b) {
+        if (root == null || root == a || root == b) {
+            return root;
+        }
+
+        KnaryTreeNode prev = null;
+
+        for (KnaryTreeNode node : root.children) {
+            if (prev == null) {
+                prev = lowestCommonAncestor3(node, a, b);
+            } else {
+                if (lowestCommonAncestor3(node, a, b) != null) {
+                    return root;
+                }
+            }
+        }
+
+        return prev;
+    }
+
+    /**
+     * Lowest Common Ancestor VI
+     * <p>
+     * Given M nodes in a K-nary tree, find their lowest common ancestor.
+    */
+    public KnaryTreeNode lowestCommonAncestor4(KnaryTreeNode root, List<KnaryTreeNode> nodes) {
+        Set<KnaryTreeNode> set = new HashSet<>(nodes);
+        return lowestCommonAncestor4(root, set);
+    }
+
+    private KnaryTreeNode lowestCommonAncestor4(KnaryTreeNode root, Set<KnaryTreeNode> set) {
+        if (root == null || set.contains(root)) {
+            return root;
+        }
+
+        KnaryTreeNode prev = null;
+
+        for (KnaryTreeNode node : root.children) {
+            if (prev == null) {
+                prev = lowestCommonAncestor4(node, set);
+            } else {
+                if (lowestCommonAncestor4(node, set) != null) {
+                    return root;
+                }
+            }
+        }
+
+        return prev;
     }
 }
