@@ -6,8 +6,11 @@ import utils.TreeNode;
 public class CrossTrainingII {
     public static void main(String[] args) {
         CrossTrainingII c = new CrossTrainingII();
-        int[] array = new int[] { 3, 9, 1, 2, 3 };
-        System.out.println(c.allPairs(array, 4));
+        int[] array = new int[] { 4, 3, 2, 1 };
+        int[] result = c.countArray(array);
+        for (int num : result) {
+            System.out.println(num + " ");
+        }
         // List<List<Integer>> list = new ArrayList<>();
         // list.add(Arrays.asList(1, 2));
         // list.get(0).add(3);
@@ -192,5 +195,77 @@ public class CrossTrainingII {
         }
 
         return result;
+    }
+
+    /**
+     * Get Count Array
+     * <p>
+     * Given an array A of length N containing all positive integers from [1...N].
+     * How to get an array B such that B[i] represents how many elements A[j] (j >
+     * i) in array A that are smaller than A[i].
+     */
+    public int[] countArrayN2(int[] array) {
+        TreeSet<Integer> set = new TreeSet<>();
+        int[] result = new int[array.length];
+        for (int i = array.length - 1; i >= 0; i--) {
+            result[i] = set.headSet(array[i]).size();
+            set.add(array[i]);
+        }
+        return result;
+    }
+
+    // public int[] countArray(int[] array) {
+    //     int[] result = new int[array.length];
+    //     mergeSort(array, result, 0, (array.length - 1) / 2, array.length - 1);
+    //     return result;
+    // }
+
+    // private void mergeSort(int[] array, int[] result, int left, int mid, int right) {
+    //     if (mid - 1 == left) {
+    //         if (array[left] > array[mid]) {
+    //             result[left] += 1 + result[mid];
+    //         }
+    //     } else {
+    //         mergeSort(array, result, left, (left + mid) / 2, mid);
+    //     }
+    //     if (right - 2 == mid) {
+    //         if (array[mid + 1] > array[right]) {
+    //             result[mid + 1] += 1 + result[right];
+    //         }
+    //     } else if (right - 1 != mid) {
+    //         mergeSort(array, result, mid + 1, (mid + right + 1) / 2, right);
+    //     }
+
+    //     merge(array, result, left, mid, right);
+    // }
+
+    // private void merge(int[] array, int[] result, int left, int mid, int right) {
+
+    //     int mid2 = mid + 1;
+    //     while (mid >= left && right >= mid2) {
+    //         if (array[mid] <= array[right]) {
+    //             right--;
+    //         } else {
+    //             result[mid] += result[right--] + 1;
+    //         }
+    //     }
+    //     if (right == mid2 - 1) {
+    //         while (mid >= left) {
+    //             if (array[mid] > array[mid2]) {
+    //                 result[mid] += result[mid2] + 1;
+    //             }
+    //             mid--;
+    //         }
+    //     }
+    // }
+
+    /**
+     * 3 Sum
+     * <p>
+     * Determine if there exists three elements in a given array that sum to the
+     * given target number. Return all the triple of values that sums to target.
+     */
+    public List<List<Integer>> allTriple(int[] array, int target) {
+        return null;
     }
 }
