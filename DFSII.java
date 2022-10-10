@@ -351,6 +351,9 @@ public class DFSII {
     }
 
     private boolean keepDistance(int[] result, int n) {
+        if (n == 0) {
+            return true;
+        }
         for (int i = 0; i + n + 1 < result.length; i++) {
             if (result[i] == 0 && result[i + n + 1] == 0) {
                 result[i] = n;
