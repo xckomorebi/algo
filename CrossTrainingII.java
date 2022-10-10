@@ -5,12 +5,12 @@ import utils.TreeNode;
 
 public class CrossTrainingII {
     public static void main(String[] args) {
-        CrossTrainingII c = new CrossTrainingII();
-        int[] array = new int[] { 4, 3, 2, 1 };
-        int[] result = c.countArray(array);
-        for (int num : result) {
-            System.out.println(num + " ");
-        }
+        // CrossTrainingII c = new CrossTrainingII();
+        // int[] array = new int[] { 4, 3, 2, 1 };
+        // int[] result = c.countArray(array);
+        // for (int num : result) {
+        //     System.out.println(num + " ");
+        // }
         // List<List<Integer>> list = new ArrayList<>();
         // list.add(Arrays.asList(1, 2));
         // list.get(0).add(3);
